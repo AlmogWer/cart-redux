@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { INCREASE, DECREASE, REMOVE } from "../actions";
+import { INCREASE, DECREASE, REMOVE, TOGGLE_AMOUNT } from "../actions";
 
 const CartItem = ({
   img,
@@ -10,6 +10,7 @@ const CartItem = ({
   remove,
   increase,
   decrease,
+  toggle,
 }) => {
   return (
     <div className="cart-item">
@@ -27,7 +28,7 @@ const CartItem = ({
         <button
           className="amount-btn"
           onClick={() => {
-            increase();
+            toggle("inc");
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -43,7 +44,7 @@ const CartItem = ({
             if (amount === 1) {
               return remove();
             } else {
-              decrease();
+              toggle("dec");
             }
           }}
         >
@@ -61,6 +62,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     remove: () => dispatch({ type: REMOVE, payload: { id } }),
     increase: () => dispatch({ type: INCREASE, payload: { id, amount } }),
     decrease: () => dispatch({ type: DECREASE, payload: { id, amount } }),
+    toggle: (toggle) =>
+      dispatch({ type: TOGGLE_AMOUNT, payload: { id, toggle } }),
   };
 };
 
